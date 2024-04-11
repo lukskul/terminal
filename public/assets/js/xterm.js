@@ -7,9 +7,8 @@ term.writeln('Xterm System Security Interface');
 term.writeln('Version 4.0.5, Alpha E');
 term.writeln('Ready...');
 
-var inputBuffer = ''; // Buffer to store user input
+var inputBuffer = ''; 
 
-// Define the keywords variable with the JSON data
 var keywords = {
   "help": "about /n contact",
   "about": "Show information about the application",
@@ -17,60 +16,50 @@ var keywords = {
   "access": "access: PERMISSION DENIED only higher level administrator access",
   "access main security grid": "This command should break the terminal",
   "clear": "Clears the Terminal."
-  // Add more keywords as needed
 };
 
-// Add event listener for key presses
 term.onKey(e => {
   if (e.domEvent.key === 'Enter') {
     handleInput(inputBuffer.trim());
     inputBuffer = '';
   } else if (e.domEvent.key === 'Backspace') {
-    // Handle backspace key
     if (inputBuffer.length > 0) {
-      term.write('\b \b'); // Move cursor left, write space, move cursor left again
-      inputBuffer = inputBuffer.slice(0, -1); // Remove last character from buffer
+      term.write('\b \b'); 
+      inputBuffer = inputBuffer.slice(0, -1); 
     }
   } else if (e.domEvent.key === 'Delete') {
-    // Handle delete key
     if (inputBuffer.length > 0) {
-      term.write('\b \b'); // Move cursor left, write space, move cursor left again
-      inputBuffer = inputBuffer.slice(0, -1); // Remove last character from buffer
+      term.write('\b \b'); 
+      inputBuffer = inputBuffer.slice(0, -1); 
     }
-  } else if (e.key === '\r') { // Check if the user pressed Enter
-    handleInput(inputBuffer.trim()); // Trim leading and trailing whitespace
-    inputBuffer = ''; // Clear the input buffer
+  } else if (e.key === '\r') { 
+    handleInput(inputBuffer.trim()); 
+    inputBuffer = ''; 
   } else {
-    term.write(e.key); // Write other characters to the terminal
-    inputBuffer += e.key; // Add character to input buffer
+    term.write(e.key); 
+    inputBuffer += e.key;
   }
 });
 
-// Function to handle user input
 function handleInput(input) {
-  // Check if input matches any keyword
   var matchedKeyword = false;
   for (const keyword in keywords) {
     if (input === keyword) {
-      executeCommand(keyword); // Execute command associated with the keyword
+      executeCommand(keyword); 
       matchedKeyword = true;
       break;
     }
   }
 
-  // If no keyword matched, display "authorization denied"
   if (!matchedKeyword) {
     term.writeln('\r\nauthorization denied');
-    term.prompt(); // Add prompt after message
+    term.prompt(); 
   }
 }
 
-// Function to execute commands associated with keywords
 function executeCommand(keyword) {
-  // Get the action/message associated with the keyword
   var action = keywords[keyword];
-  
-  // Perform action based on the keyword
+
   switch (keyword) {
     case "help":
       term.writeln('\r\nCommands:');
@@ -102,9 +91,9 @@ function executeCommand(keyword) {
         count++;
         if (count === 50) {
           clearInterval(interval);
-          term.prompt(); // Add prompt after message
+          term.prompt(); 
         }
-      }, 100); // Adjust the delay (in milliseconds) as needed
+      }, 100);
       break; 
     case "clear":
       term.clear();
@@ -116,13 +105,11 @@ function executeCommand(keyword) {
       break;
   }
 
-  term.prompt(); // Add prompt after message
+  term.prompt(); 
 }
 
-// Function to add a prompt
 term.prompt = function() {
-  term.focus(); // Write prompt text to the terminal
+  term.focus(); 
 }
 
-// Initial prompt
 term.prompt();
