@@ -9,7 +9,9 @@ cont...
 ## ToDo: 
 
 [x] Build out a larger project seperating the javascript and running a dev server for development.
+
 [ ] Add sounds and video of Dennis Nedry's security alert.  
+
 [ ] Link terminal to blockchain and have commands that can pull in real data. 
 
 ## How to run this project:  
